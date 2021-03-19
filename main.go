@@ -9,6 +9,7 @@ import (
 	"os"
 	"path/filepath"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/Arman92/go-tdlib"
@@ -172,16 +173,27 @@ func getBaseFilename(filename string) string {
 func (bot *tdbot) getCoverFile(filename string) (string, error) {
 	dirname := "./tmp/"
 
-	files, err := filepath.Glob(dirname + filename + "*")
+	d, err := os.Open(dirname)
+	if err != nil {
+		return "", err
+	}
+	defer d.Close()
+
+	files, err := d.Readdir(-1)
 	if err != nil {
 		return "", err
 	}
 
 	for _, file := range files {
-		if filepath.Ext(file) == ".png" || filepath.Ext(file) == ".jpg" || filepath.Ext(file) == ".jpeg" {
-			return file, nil
+		if file.Mode().IsRegular() {
+			if filepath.Ext(file.Name()) == ".png" || filepath.Ext(file.Name()) == ".jpg" || filepath.Ext(file.Name()) == ".jpeg" {
+				if strings.Contains(file.Name(), filename) {
+					return dirname + file.Name(), nil
+				}
+			}
 		}
 	}
+
 	return "", nil
 }
 
