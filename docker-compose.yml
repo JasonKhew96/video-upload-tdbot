@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  video-upload-tdbot:
+    build: .
+    volumes:
+      - ./tmp:/runner/tmp/
+    env_file:
+      - production.env
