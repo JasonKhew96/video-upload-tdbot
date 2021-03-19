@@ -2,9 +2,8 @@ package main
 
 import (
 	"context"
-	"image"
 	_ "image/jpeg"
-	"image/png"
+	_ "image/png"
 	"log"
 	"os"
 	"path/filepath"
@@ -13,7 +12,7 @@ import (
 	"time"
 
 	"github.com/Arman92/go-tdlib"
-	"github.com/nfnt/resize"
+	"github.com/disintegration/imaging"
 	"gopkg.in/vansante/go-ffprobe.v2"
 )
 
@@ -229,29 +228,46 @@ func (bot *tdbot) sendVideoAlbum(videoPath, coverPath string) error {
 }
 
 func processCover(imagePath string) (string, int, int, error) {
-	reader, err := os.Open(imagePath)
+	// reader, err := os.Open(imagePath)
+	// if err != nil {
+	// 	return "", 0, 0, err
+	// }
+	// defer reader.Close()
+	// im, _, err := image.Decode(reader)
+	// if err != nil {
+	// 	return "", 0, 0, err
+	// }
+
+	// scaled := resize.Resize(320, 0, im, resize.Lanczos2)
+
+	// dstFile, err := os.Create(getBaseFilename(imagePath) + ".resize.png")
+	// if err != nil {
+	// 	return "", 0, 0, err
+	// }
+	// defer dstFile.Close()
+	// err = png.Encode(dstFile, scaled)
+	// if err != nil {
+	// 	return "", 0, 0, err
+	// }
+
+	src, err := imaging.Open(imagePath)
 	if err != nil {
 		return "", 0, 0, err
 	}
-	defer reader.Close()
-	im, _, err := image.Decode(reader)
+	if src.Bounds().Dx() > src.Bounds().Dy() {
+		src = imaging.Resize(src, 320, 0, imaging.Lanczos)
+	} else {
+		src = imaging.Resize(src, 0, 320, imaging.Lanczos)
+	}
+
+	newPath := getBaseFilename(imagePath) + ".resize.png"
+
+	err = imaging.Save(src, newPath)
 	if err != nil {
 		return "", 0, 0, err
 	}
 
-	scaled := resize.Resize(320, 0, im, resize.Lanczos2)
-
-	dstFile, err := os.Create(getBaseFilename(imagePath) + ".resize.png")
-	if err != nil {
-		return "", 0, 0, err
-	}
-	defer dstFile.Close()
-	err = png.Encode(dstFile, scaled)
-	if err != nil {
-		return "", 0, 0, err
-	}
-
-	return dstFile.Name(), scaled.Bounds().Dx(), scaled.Bounds().Dy(), nil
+	return newPath, src.Bounds().Dx(), src.Bounds().Dy(), nil
 }
 
 func getVideoMeta(videoPath string) (float64, int, int, error) {

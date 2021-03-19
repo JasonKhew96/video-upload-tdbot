@@ -1,6 +1,9 @@
 github.com/Arman92/go-tdlib v0.0.0-20210308102204-0e8c2db02b5b h1:DxWsOyMIAfl5uoL94lAoDbnK3KixqLw5z+L4057b4AA=
 github.com/Arman92/go-tdlib v0.0.0-20210308102204-0e8c2db02b5b/go.mod h1:ZzkRfuaFj8etIYMj/ECtXtgfz72RE6U+dos27b3XIwk=
-github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646 h1:zYyBkD/k9seD2A7fsi6Oo2LfFZAehjjQMERAvZLEDnQ=
-github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646/go.mod h1:jpp1/29i3P1S/RLdc7JQKbRpFeM1dOBd8T9ki5s+AY8=
+github.com/disintegration/imaging v1.6.2 h1:w1LecBlG2Lnp8B3jk5zSuNqd7b4DXhcjwek1ei82L+c=
+github.com/disintegration/imaging v1.6.2/go.mod h1:44/5580QXChDfwIclfc/PCwrr44amcmDAg8hxG0Ewe4=
+golang.org/x/image v0.0.0-20191009234506-e7c1f5e7dbb8 h1:hVwzHzIUGRjiF7EcUjqNxk3NCfkPxbDKRdnNE1Rpg0U=
+golang.org/x/image v0.0.0-20191009234506-e7c1f5e7dbb8/go.mod h1:FeLwcggjj3mMvU+oOTbSwawSJRM1uh48EjtB4UJZlP0=
+golang.org/x/text v0.3.0/go.mod h1:NqM8EUOU14njkJ3fqMW+pc6Ldnwhi/IjpwHt7yyuwOQ=
 gopkg.in/vansante/go-ffprobe.v2 v2.0.2 h1:DdxSfFnlqeawPIVbIQEI6LR6OQHQNR7tNgWb2mWuC4w=
 gopkg.in/vansante/go-ffprobe.v2 v2.0.2/go.mod h1:qF0AlAjk7Nqzqf3y333Ly+KxN3cKF2JqA3JT5ZheUGE=
