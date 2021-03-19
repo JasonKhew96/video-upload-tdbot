@@ -80,6 +80,11 @@ func main() {
 		}
 	}
 
+	_, err = bot.GetChat(bot.chatID)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
 	if err := bot.parseAllVideos(); err != nil {
 		log.Fatalln(err)
 	}
@@ -198,10 +203,6 @@ func (bot *tdbot) sendVideoAlbum(videoPath, coverPath string) error {
 
 	inputMsgVideo := tdlib.NewInputMessageVideo(inputFileVideo, inputThumbnail, nil, int32(duration), int32(vwidth), int32(vheight), true, nil, 0)
 
-	_, err = bot.GetChat(bot.chatID)
-	if err != nil {
-		return err
-	}
 	msgVideo, err := bot.SendMessage(bot.chatID, 0, 0, nil, nil, inputMsgVideo)
 	if err != nil {
 		return err
