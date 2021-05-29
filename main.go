@@ -11,7 +11,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/Arman92/go-tdlib"
+	"github.com/JasonKhew96/go-tdlib"
 	"github.com/disintegration/imaging"
 	"gopkg.in/vansante/go-ffprobe.v2"
 )
@@ -108,16 +108,16 @@ func (bot *tdbot) progressHandler() {
 		updateMsg := (newMsg).(*tdlib.UpdateFile)
 		if updateMsg.File.Remote != nil {
 			if updateMsg.File.Remote.IsUploadingActive {
-				uploadProgress, ok := bot.allProgress[updateMsg.File.ID]
+				uploadProgress, ok := bot.allProgress[updateMsg.File.Id]
 				if ok && time.Now().Unix()-uploadProgress.lastUpdateTime > 1 {
 					log.Printf("Uploading %s, %d / %d\n", uploadProgress.videoPath, updateMsg.File.Remote.UploadedSize, updateMsg.File.ExpectedSize)
 					uploadProgress.lastUpdateTime = time.Now().Unix()
 				}
 			} else if updateMsg.File.Remote.IsUploadingCompleted {
-				log.Printf("Upload Completed, uniqueId \"%s\"\n", updateMsg.File.Remote.UniqueID)
-				_, ok := bot.allProgress[updateMsg.File.ID]
+				log.Printf("Upload Completed, uniqueId \"%s\"\n", updateMsg.File.Remote.UniqueId)
+				_, ok := bot.allProgress[updateMsg.File.Id]
 				if ok {
-					delete(bot.allProgress, updateMsg.File.ID)
+					delete(bot.allProgress, updateMsg.File.Id)
 				}
 				if len(bot.allProgress) <= 0 {
 					bot.done <- true
@@ -219,7 +219,7 @@ func (bot *tdbot) sendVideoAlbum(videoPath, coverPath string) error {
 		return err
 	}
 
-	bot.allProgress[msgVideo.Content.(*tdlib.MessageVideo).Video.Video.ID] = &progressTracker{
+	bot.allProgress[msgVideo.Content.(*tdlib.MessageVideo).Video.Video.Id] = &progressTracker{
 		lastUpdateTime: time.Now().Unix() - 5,
 		videoPath:      videoPath,
 	}
